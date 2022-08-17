@@ -21,7 +21,7 @@ class ClassState extends Component {
                 />
                 <button
                     //onClick={() => this.setState({error: !this.state.error})}
-                    onClick={() => this.setState(prevState => ({error: !prevState.error}))}
+                    onClick={() => this.setState(prevState => ({error: !prevState.error}))} //utilizando el prevState
                 >Compropar</button>
             </div>
         );
