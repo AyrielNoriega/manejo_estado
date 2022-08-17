@@ -1,8 +1,24 @@
 import React from "react";
 
 function UseState(props) {
-    const [error, setError] = React.useState(false);
-    const [otroState, setOtroState] = React.useState(false);
+    const [error, setError] = React.useState(false); //React hook
+    const [loading, setLoading] = React.useState(false);
+
+    React.useEffect(() => {
+        console.log('empezando efecto');
+    
+        if (loading) {
+            setTimeout(() => {
+                console.log('haciendo consulta');
+        
+                setLoading(false);
+        
+                console.log('terminando consulta');
+            }, 3000);
+        }
+    
+        console.log('terminando efecto');
+    }, [loading])
 
     return(
         <div>
@@ -12,10 +28,15 @@ function UseState(props) {
             {error && (
                 <p>Error: el código es incorrecto.</p>
             )}
+            {loading && (
+                <p>Cargando...</p>
+            )}
             <input
                 placeholder="codigo de seguridad"
             />
-            <button>Compropar</button>
+            <button
+                onClick={()=> setLoading(true)}
+            >Compropar</button>
         </div>
     );
 }
