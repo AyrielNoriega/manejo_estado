@@ -18,6 +18,8 @@ function UseState(props) {
 
                 if (value === SECURITY_CODE) {
                     setLoading(false);
+                    setError(false)
+                
                 } else {
                     setError(true)
                     setLoading(false);
@@ -35,7 +37,7 @@ function UseState(props) {
             <h2>Eliminar {props.name}</h2>
             <p>Por favor, escribe el código de seguridad.</p>
 
-            {error && (
+            {(error && !loading) && (
                 <p>Error: el código es incorrecto.</p>
             )}
             {loading && (
