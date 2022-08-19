@@ -4,12 +4,12 @@ const SECURITY_CODE = 'paradigma';
 
 function UseState(props) {
 
-    //Estados compuestos con useState.
-    // const [state, setState] = React.useState({
-    //     value: '',
-    //     error: false,
-    //     loading: false
-    // });
+    //Estados compuestos con useState
+    const [state, setState] = React.useState({
+        value: '',
+        error: false,
+        loading: false
+    });
 
 
     // setState({
@@ -17,26 +17,36 @@ function UseState(props) {
     //     loading: false
     // })
 
-    const [error, setError] = React.useState(false); //React hook
-    const [loading, setLoading] = React.useState(false);
-    const [value, setValue] = React.useState('');
+    //estados simples
+    // const [error, setError] = React.useState(false); //React hook
+    // const [loading, setLoading] = React.useState(false);
+    // const [value, setValue] = React.useState('');
 
     React.useEffect(() => {
         console.log('empezando efecto');
     
-        if (loading) {
+        if (state.loading) {
             setTimeout(() => {
                 console.log('haciendo consulta');
-        
-                setLoading(false);
+                //setLoading(false);
 
-                if (value === SECURITY_CODE) {
-                    setLoading(false);
-                    setError(false)
+                if (state.value === SECURITY_CODE) {
+                    setState({
+                        ...state,
+                        loading: false,
+                        error: false
+                    });
+                    //setLoading(false);
+                    //setError(false)
                 
                 } else {
-                    setError(true)
-                    setLoading(false);
+                    setState({
+                        ...state,
+                        error: true,
+                        loading: false,
+                    });
+                    // setError(true)
+                    // setLoading(false);
                 }
 
                 console.log('terminando consulta');
@@ -44,28 +54,39 @@ function UseState(props) {
         }
     
         console.log('terminando efecto');
-    }, [loading])
+    }, [state.loading])
 
     return(
         <div>
             <h2>Eliminar {props.name}</h2>
             <p>Por favor, escribe el código de seguridad.</p>
 
-            {(error && !loading) && (
+            {(state.error && !state.loading) && (
                 <p>Error: el código es incorrecto.</p>
             )}
-            {loading && (
+            {state.loading && (
                 <p>Cargando...</p>
             )}
             <input
                 placeholder="codigo de seguridad"
-                value={ value }
+                value={ state.value }
                 onChange={(event) => {
-                    setValue(event.target.value)
+                    setState({
+                        ...state,
+                        value: event.target.value
+                    });
+                    //setValue(event.target.value)
                 }}
             />
             <button
-                onClick={()=> setLoading(true)}
+                onClick={()=> {
+                    setState({
+                        ...state,
+                        loading: true
+                    });
+                }
+                //setLoading(true)
+                }
             >Compropar</button>
         </div>
     );
