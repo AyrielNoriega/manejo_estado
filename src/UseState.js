@@ -24,6 +24,54 @@ function UseState(props) {
     // const [loading, setLoading] = React.useState(false);
     // const [value, setValue] = React.useState('');
 
+    const onConfirm = () => {
+        setState({
+            ...state,
+            loading: false,
+            error: false,
+            confirmed: true
+        });
+    }
+
+    const onError = () => {
+        setState({
+            ...state,
+            error: true,
+            loading: false,
+        });
+    };
+
+    const onWrite = (newValue) => {
+            setState({
+                ...state,
+                value: newValue
+            });
+            //setValue(event.target.value)
+    };
+
+    const onCheck = () => {
+        setState({
+            ...state,
+            loading: true
+        });
+    };
+
+    const onDelete = () => {
+        setState({
+            ...state, //para utilizar estados compuesta en componentes de funciones es necesario hacer referencia al estado actual con ...state y luego indicar las modificaciones.
+            deleted: true
+        });
+    };
+
+    const onReset = () => {
+        setState({
+            ...state, //para utilizar estados compuesta en componentes de funciones es necesario hacer referencia al estado actual con ...state y luego indicar las modificaciones.
+            confirmed: false,
+            deleted: false,
+            value: ''
+        });
+    };
+
     React.useEffect(() => {
         console.log('empezando efecto');
     
@@ -33,21 +81,11 @@ function UseState(props) {
                 //setLoading(false);
 
                 if (state.value === SECURITY_CODE) {
-                    setState({
-                        ...state,
-                        loading: false,
-                        error: false,
-                        confirmed: true
-                    });
+                    onConfirm();
                     //setLoading(false);
                     //setError(false)
-                
                 } else {
-                    setState({
-                        ...state,
-                        error: true,
-                        loading: false,
-                    });
+                    onError();
                     // setError(true)
                     // setLoading(false);
                 }
@@ -75,21 +113,15 @@ function UseState(props) {
                     placeholder="codigo de seguridad"
                     value={ state.value }
                     onChange={(event) => {
-                        setState({
-                            ...state,
-                            value: event.target.value
-                        });
-                        //setValue(event.target.value)
+                        onWrite(event.target.value)
                     }}
+                    
                 />
                 <button
                     onClick={()=> {
-                        setState({
-                            ...state,
-                            loading: true
-                        });
-                    }
-                    //setLoading(true)
+                            onCheck();
+                        }
+                        //setLoading(true)
                     }
                 >Compropar</button>
             </div>
@@ -100,18 +132,12 @@ function UseState(props) {
                 <p>Estado de confirmación</p>
                 <button
                     onClick={() => {
-                        setState({
-                            ...state, //para utilizar estados compuesta en componentes de funciones es necesario hacer referencia al estado actual con ...state y luego indicar las modificaciones.
-                            deleted: true
-                        });
+                        onDelete();
                     }}
                 >Sí, eliminar</button>
                 <button
                     onClick={() => {
-                        setState({
-                            ...state, //para utilizar estados compuesta en componentes de funciones es necesario hacer referencia al estado actual con ...state y luego indicar las modificaciones.
-                            confirmed: false
-                        });
+                        onReset();
                     }}
                 >No, me arrepentí</button>
             </React.Fragment>
@@ -122,12 +148,7 @@ function UseState(props) {
                 <p>Eliminado con éxito</p>
                 <button
                     onClick={() => {
-                        setState({
-                            ...state, //para utilizar estados compuesta en componentes de funciones es necesario hacer referencia al estado actual con ...state y luego indicar las modificaciones.
-                            confirmed: false,
-                            deleted: false,
-                            value: ''
-                        });
+                        onReset();
                     }}
                 >
                     Resetear, volver atrás
