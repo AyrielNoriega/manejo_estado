@@ -3,6 +3,20 @@ import React from "react";
 const SECURITY_CODE = 'paradigma';
 
 function UseState(props) {
+
+    //Estados compuestos con useState.
+    // const [state, setState] = React.useState({
+    //     value: '',
+    //     error: false,
+    //     loading: false
+    // });
+
+
+    // setState({
+    //     ...state,
+    //     loading: false
+    // })
+
     const [error, setError] = React.useState(false); //React hook
     const [loading, setLoading] = React.useState(false);
     const [value, setValue] = React.useState('');
